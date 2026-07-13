@@ -1,0 +1,11 @@
+[Unit]
+Description=Deploy saoma-weixin from GitHub
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=muhaoxing
+Group=muhaoxing
+ExecStart=/home/muhaoxing/bin/deploy-saoma-weixin
+
