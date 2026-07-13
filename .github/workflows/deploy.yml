@@ -1,0 +1,51 @@
+name: Deploy website
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://wx.shuangdeng.space
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare website
+        run: |
+          mkdir dist
+          cp -R 1 2 3 images index.html styles.css .nojekyll dist/
+
+      - name: Configure SSH
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/saoma-weixin
+          chmod 600 ~/.ssh/saoma-weixin
+          printf '%s\n' '140.238.56.209 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID3YwrpZoeAwaO0PulwrBX6zKoa3rWPvSXEm04o1UWHd' > ~/.ssh/known_hosts
+
+      - name: Upload website
+        run: |
+          rsync -az --delete \
+            -e "ssh -i $HOME/.ssh/saoma-weixin" \
+            dist/ muhaoxing@140.238.56.209:/opt/1panel/www/sites/wx.shuangdeng.space/
+
+      - name: Verify deployment
+        run: |
+          ssh -i "$HOME/.ssh/saoma-weixin" muhaoxing@140.238.56.209 \
+            'test -f /opt/1panel/www/sites/wx.shuangdeng.space/1/index.html && test -f /opt/1panel/www/sites/wx.shuangdeng.space/2/index.html && test -f /opt/1panel/www/sites/wx.shuangdeng.space/3/index.html'
+
