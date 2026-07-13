@@ -22,7 +22,7 @@ main {
   text-align: center;
 }
 
-.image-link {
+.image-frame {
   display: block;
   background: #fff;
   border: 1px solid #e5e7eb;
@@ -31,36 +31,8 @@ main {
   line-height: 0;
 }
 
-.image-link img {
+.image-frame img {
   display: block;
   width: 100%;
   height: auto;
 }
-
-.download-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 160px;
-  min-height: 48px;
-  margin-top: 20px;
-  padding: 0 24px;
-  border-radius: 6px;
-  background: #1677ff;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.download-button:focus-visible {
-  outline: 3px solid rgba(22, 119, 255, 0.3);
-  outline-offset: 3px;
-}
-
-@media (hover: hover) {
-  .download-button:hover {
-    background: #0958d9;
-  }
-}
-

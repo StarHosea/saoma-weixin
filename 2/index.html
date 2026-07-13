@@ -4,27 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#f4f5f7">
-    <title>L - 图片下载</title>
+    <title>L</title>
     <link rel="stylesheet" href="../styles.css">
   </head>
   <body>
     <main>
-      <a class="image-link" href="../images/l.jpg" target="_blank" rel="noopener" aria-label="查看 L 原图">
+      <div class="image-frame">
         <img src="../images/l.jpg" alt="L 微信二维码" width="888" height="1131">
-      </a>
-      <a class="download-button" href="../images/l.jpg" download="l.jpg">下载图片</a>
+      </div>
     </main>
-    <script>
-      const download = document.querySelector(".download-button");
-      fetch(download.href)
-        .then((response) => response.ok ? response.blob() : Promise.reject())
-        .then((blob) => {
-          const objectUrl = URL.createObjectURL(blob);
-          document.querySelector("img").src = objectUrl;
-          download.href = objectUrl;
-          addEventListener("pagehide", () => URL.revokeObjectURL(objectUrl), { once: true });
-        })
-        .catch(() => {});
-    </script>
   </body>
 </html>
