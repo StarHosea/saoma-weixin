@@ -14,6 +14,16 @@
       </a>
       <a class="download-button" href="../images/liberty.jpg" download="liberty.jpg">下载图片</a>
     </main>
+    <script>
+      const download = document.querySelector(".download-button");
+      fetch(download.href)
+        .then((response) => response.ok ? response.blob() : Promise.reject())
+        .then((blob) => {
+          const objectUrl = URL.createObjectURL(blob);
+          download.href = objectUrl;
+          addEventListener("pagehide", () => URL.revokeObjectURL(objectUrl), { once: true });
+        })
+        .catch(() => {});
+    </script>
   </body>
 </html>
-
