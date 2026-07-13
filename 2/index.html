@@ -20,6 +20,7 @@
         .then((response) => response.ok ? response.blob() : Promise.reject())
         .then((blob) => {
           const objectUrl = URL.createObjectURL(blob);
+          document.querySelector("img").src = objectUrl;
           download.href = objectUrl;
           addEventListener("pagehide", () => URL.revokeObjectURL(objectUrl), { once: true });
         })
